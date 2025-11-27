@@ -1,0 +1,57 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kód letöltése
+        uses: actions/checkout@v4
+
+      - name: Node.js beállítása
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Frontend függőségek
+        working-directory: ./client
+        run: npm ci
+
+      - name: Unit Tesztek futtatása
+        working-directory: ./client
+        run: npm test
+
+      - name: Playwright telepítése
+        run: npx playwright install --with-deps
+
+      - name: E2E Tesztek futtatása
+        run: npx playwright test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy a DigitalOcean szerverre
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p ~/kudos-app
+            cd ~/kudos-app
+
+
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/${{ github.repository }} .
+            else
+              git pull origin main
+            fi
+
+            echo "${{ secrets.PROD_ENV_FILE }}" > .env
+
+            docker compose down
+            docker compose up -d --build
