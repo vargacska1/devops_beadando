@@ -26,9 +26,10 @@ jobs:
 
       - name: Backend függőségek
         working-directory: ./server
-        run: npm ci
+        run: npm install
 
       - name: Playwright telepítése
+        run: npm install -D @playwright/test
         run: npx playwright install --with-deps
 
       - name: E2E Tesztek futtatása
