@@ -76,7 +76,7 @@ function App() {
         {kudos.map((kudo) => (
           <div key={kudo._id} className="card">
             <div className="card-header">
-              <strong>To: {kudo.recipient}</strong>
+              <p>To: {kudo.recipient}</p>
             </div>
             <p className="card-body">"{kudo.message}"</p>
             <div className="card-footer">
