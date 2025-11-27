@@ -24,6 +24,10 @@ jobs:
         working-directory: ./client
         run: npm test
 
+      - name: Backend függőségek
+        working-directory: ./server
+        run: npm ci
+
       - name: Playwright telepítése
         run: npx playwright install --with-deps
 
