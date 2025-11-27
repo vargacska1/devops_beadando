@@ -28,6 +28,9 @@ jobs:
         working-directory: ./server
         run: npm install
 
+      - name: Docker Compose indítása (Backend & DB)
+        run: docker compose up -d --build
+
       - name: Playwright telepítése
         run: npm install -D @playwright/test && npx playwright install --with-deps
 
