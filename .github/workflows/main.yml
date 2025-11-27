@@ -29,8 +29,7 @@ jobs:
         run: npm install
 
       - name: Playwright telepítése
-        run: npm install -D @playwright/test
-        run: npx playwright install --with-deps
+        run: npm install -D @playwright/test && npx playwright install --with-deps
 
       - name: E2E Tesztek futtatása
         run: npx playwright test
