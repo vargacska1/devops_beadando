@@ -57,7 +57,7 @@ jobs:
           username: ${{secrets.DO_USERNAME}}
           key: ${{secrets.SSH_PRIVATE_KEY}}
           source: "docker-compose.yml"
-          target: "~/kudos-app/
+          target: "~/kudos-app/"
       
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1.0.3
