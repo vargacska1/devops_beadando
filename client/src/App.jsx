@@ -5,7 +5,6 @@ function App() {
   const [kudos, setKudos] = useState([]);
   const [formData, setFormData] = useState({ recipient: '', message: '', sender: '' });
   
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
   useEffect(() => {
     fetchKudos();
@@ -13,7 +12,7 @@ function App() {
 
   const fetchKudos = async () => {
     try {
-      const res = await fetch(`/api/kudos`);
+      const res = await fetch(`https://api.lid75l.me/api/kudos`);
       const data = await res.json();
       setKudos(data);
     } catch (err) {
@@ -24,7 +23,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/kudos`, {
+      const res = await fetch(`https://api.lid75l.me/api/kudos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
