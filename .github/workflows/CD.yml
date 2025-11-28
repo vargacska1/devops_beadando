@@ -41,6 +41,8 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: vargacska1/devops_frontend:latest
+          build-args: |
+            VITE_API_URL=${{ secrets.VITE_API_URL }}
       
 
   deploy:
