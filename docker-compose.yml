@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mongo:
     image: mongo:6.0
-    container_name: kudos_mongo
+    container_name: kudos-mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
@@ -18,7 +18,7 @@ services:
   server:
     image: vargacska1/devops_backend:latest
     build: ./server
-    container_name: kudos_server
+    container_name: kudos-server
     restart: always
     ports:
       - "${BACKEND_PORT}:3000"
@@ -39,7 +39,7 @@ services:
       context: ./client
       args:
         VITE_API_URL: ${VITE_API_URL}
-    container_name: kudos_client
+    container_name: kudos-client
     restart: always
     ports:
       - "${FRONTEND_PORT}:80"
