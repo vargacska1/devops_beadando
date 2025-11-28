@@ -3,8 +3,10 @@ name: CD Pipeline
 on:
   workflow_run:
     workflows: ["CI Pipeline"]
-    types: [completed]
-    branches: [ "main" ]
+    types:
+      - completed
+    branches:
+      - main
 
 jobs:    
   build:
@@ -68,7 +70,7 @@ jobs:
             cd ~/kudos-app
 
             echo "${{ secrets.PROD_ENV_FILE }}" > .env
-            
+
             docker compose pull
             docker compose up -d --remove-orphans --force-recreate
             docker image prune -f
