@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -33,29 +33,3 @@ jobs:
 
       - name: E2E Tesztek futtatása
         run: npx playwright test
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy a DigitalOcean szerverre
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            mkdir -p ~/kudos-app
-            cd ~/kudos-app
-
-
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }} .
-            else
-              git pull origin main
-            fi
-
-            echo "${{ secrets.PROD_ENV_FILE }}" > .env
-
-            docker compose down
-            docker compose up -d --build
