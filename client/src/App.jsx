@@ -13,7 +13,7 @@ function App() {
 
   const fetchKudos = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/kudos`);
+      const res = await fetch(`/api/kudos`);
       const data = await res.json();
       setKudos(data);
     } catch (err) {
@@ -24,7 +24,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_URL}/api/kudos`, {
+      const res = await fetch(`/api/kudos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
